@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package eu.monopad.ada;
+
+option java_multiple_files = true;
+option java_package = "eu.monopad.ada.proto3";
+option java_outer_classname = "Monopad";
+option csharp_namespace = "eu.monopad.ada.Proto3";
+option go_package= "monopad.eu/ada/proto3";
+
+message Null {
+}
+
+message Object {
+  map<string, Primitive> entries = 1;
+}
+
+message Array {
+  repeated Primitive items = 1;
+}
+
+message Primitive {
+  oneof value {
+    Null null_value = 1;
+    bool bool_value = 2;
+    string string_value = 3;
+    // No decimal point type (number) available (4)
+    Array array_value = 5;
+    Object object_value = 6;
+    double double_value = 7;
+    sint64 long_value = 8;
+  }
+}
+
+message Description {
+  string text = 1;
+  optional string mime = 2;
+}
+
+message Label {
+  string name = 1;
+  Description description = 2;
+  Primitive value = 3;
+}
+
+message DataItem {
+  repeated string provenance = 1;
+  repeated Label labels = 2;
+  optional bytes content = 3;
+}
