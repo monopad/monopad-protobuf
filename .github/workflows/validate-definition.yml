@@ -20,7 +20,7 @@ jobs:
         run: unzip protoc-21.9-linux-x86_64.zip
       - name: Compile Protobuf definition for python
         run: |
-          protoc -I=$GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/ --experimental_allow_proto3_optional \
+          bin/protoc -I=$GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/ --experimental_allow_proto3_optional \
             --python_out=. data-item.proto
       - name: Validate data-item.proto through sample (1)
         run: |
