@@ -27,20 +27,20 @@ jobs:
          python3 -c "
          import data_item_pb2 as proto
          item = proto.DataItem()
-         data = open('definitions/data-item-sample-1.pbf','rb').read()
+         data = open('$GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-1.pbf','rb').read()
          item.ParseFromString(data)"
       - name: Validate data-item.proto through sample (2)
         run: |
          python3 -c "
          import data_item_pb2 as proto
          item = proto.DataItem()
-         data = open('definitions/data-item-sample-2.pbf','rb').read()
+         data = open('$GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-2.pbf','rb').read()
          item.ParseFromString(data)"
       - name: Validate data-item.proto through sample (empty)
         run: |
          python3 -c "
          import data_item_pb2 as proto
          item = proto.DataItem()
-         data = open('definitions/data-item-sample-empty.pbf','rb').read()
+         data = open('$GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/data-item-sample-empty.pbf','rb').read()
          item.ParseFromString(data)"
 
