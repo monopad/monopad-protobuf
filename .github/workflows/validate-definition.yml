@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     
 jobs:
-  Validate-XML-Schema:
+  Validate-Protobuf-Definition:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3 # checkout repo content
