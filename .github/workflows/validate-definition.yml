@@ -1,0 +1,46 @@
+name: validate-definition
+
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  Validate-XML-Schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # checkout repo content
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Protobuf
+        run: pip3 install protobuf
+      - name: Download Protobuf compiler
+        run: wget https://github.com/protocolbuffers/protobuf/releases/download/v21.9/protoc-21.9-linux-x86_64.zip
+      - name: Install Protobuf compiler
+        run: unzip protoc-21.9-linux-x86_64.zip
+      - name: Compile Protobuf definition for python
+        run: |
+          protoc -I=$GITHUB_WORKSPACE/descriptions/monopad-ada-1.0/ --experimental_allow_proto3_optional \
+            --python_out=. data-item.proto
+      - name: Validate data-item.proto through sample (1)
+        run: |
+         python3 -c "
+           import data_item_pb2 as proto
+           item = proto.DataItem()
+           data = open('definitions/data-item-sample-1.pbf','rb').read()
+           item.ParseFromString(data)"
+      - name: Validate data-item.proto through sample (2)
+        run: |
+         python3 -c "
+           import data_item_pb2 as proto
+           item = proto.DataItem()
+           data = open('definitions/data-item-sample-2.pbf','rb').read()
+           item.ParseFromString(data)"
+      - name: Validate data-item.proto through sample (empty)
+        run: |
+         python3 -c "
+           import data_item_pb2 as proto
+           item = proto.DataItem()
+           data = open('definitions/data-item-sample-empty.pbf','rb').read()
+           item.ParseFromString(data)"
+
